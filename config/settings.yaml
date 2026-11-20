@@ -1,0 +1,56 @@
+# Workforce Health Early Warning System - Configuration
+
+# Simulation and District Configuration
+district:
+  name: "Al-Sharq Industrial Zone"
+  city: "Dubai"
+  bounding_box:
+    lat_min: 24.95
+    lat_max: 25.35
+    lon_min: 55.10
+    lon_max: 55.50
+  num_districts: 5
+  sites_per_district: 6
+  total_sites: 30
+
+# Time span: 3 years (2 years training/calibration, 1 year test)
+dates:
+  start_date: "2023-01-01"
+  train_end_date: "2024-12-31"
+  test_start_date: "2025-01-01"
+  end_date: "2025-12-31"
+
+# Environmental Thresholds
+environment:
+  heat_index_high_risk_threshold_c: 41.0  # WHO high risk threshold
+  pm25_unhealthy_threshold: 55.5          # US EPA Unhealthy threshold (ug/m3)
+
+# Detection & CUSUM Settings
+cusum:
+  k: 0.5   # allowance / slack
+  h: 4.0   # alarm threshold
+ewma:
+  lambda_: 0.3 # smoothing parameter
+
+# Alerting Thresholds & Anti-fatigue
+alerting:
+  watch_threshold: 0.30
+  warning_threshold: 0.55
+  critical_threshold: 0.75
+  consecutive_days_required: 2
+  workforce_contribution_critical_min: 0.25 # 25%
+  max_alerts_per_district_per_week: 5      # Alert fatigue budget
+  confidence_penalty_missing_signal: 0.7   # Multiplier per missing signal
+  confidence_penalty_district_fallback: 0.8 # Multiplier for fallback baseline
+
+# Baselines
+baseline:
+  min_history_days: 120
+  rolling_window_days: 365
+  exclusion_buffer_days: 14
+  fourier_harmonics: 2
+
+# Random Seeds for reproducibility
+seeds:
+  default_seed: 42
+  robustness_seeds: [42, 101, 2024, 777, 999]

@@ -1,0 +1,67 @@
+rules:
+  - id: "RULE_LOW_CONFIDENCE"
+    condition:
+      max_confidence: 0.50
+    level: "ANY"
+    dominant_signal: "ANY"
+    action: "Verify data feeds before acting"
+    role: "Data steward"
+    evidence_shown: "Which signals are missing and sensor status"
+
+  - id: "RULE_CRITICAL_MULTI_SIGNAL"
+    condition:
+      min_level: "Critical"
+    level: "Critical"
+    dominant_signal: "multi_signal"
+    action: "Stop or reschedule exposed work; request a site inspection"
+    role: "Occupational health lead and district regulator"
+    evidence_shown: "All contributions, lead time estimate, confidence score"
+
+  - id: "RULE_WARNING_CLINIC_LED"
+    condition:
+      min_level: "Warning"
+      dominant_signal: "clinic"
+    level: "Warning"
+    dominant_signal: "clinic"
+    action: "Check heat-illness first-aid readiness; review recent cases in aggregate"
+    role: "Occupational health lead"
+    evidence_shown: "Clinic visit residuals vs baseline"
+
+  - id: "RULE_WARNING_AIR_QUALITY_LED"
+    condition:
+      min_level: "Warning"
+      dominant_signal: "pm25"
+    level: "Warning"
+    dominant_signal: "pm25"
+    action: "Provide respiratory protection; reduce outdoor exposure"
+    role: "Site safety officer"
+    evidence_shown: "PM2.5 exceedance, respiratory visit trend"
+
+  - id: "RULE_WARNING_ENV_LED"
+    condition:
+      min_level: "Warning"
+      dominant_signal: "environment"
+    level: "Warning"
+    dominant_signal: "environment"
+    action: "Add rest-break cycles; move heavy work to cooler hours; open hydration points"
+    role: "Site safety officer"
+    evidence_shown: "Heat index exceedance, clinic visit trend"
+
+  - id: "RULE_WATCH_ENV_LED"
+    condition:
+      min_level: "Watch"
+      dominant_signal: "environment"
+    level: "Watch"
+    dominant_signal: "environment"
+    action: "Pre-brief site on heat precautions; confirm water and shade are available"
+    role: "Site safety officer"
+    evidence_shown: "Heat index forecast and baseline gap"
+
+  - id: "RULE_WATCH_DEFAULT"
+    condition:
+      min_level: "Watch"
+    level: "Watch"
+    dominant_signal: "ANY"
+    action: "Increase monitoring vigilance; confirm water, shade and first aid resources"
+    role: "Site safety officer"
+    evidence_shown: "Multi-signal elevation summary"
